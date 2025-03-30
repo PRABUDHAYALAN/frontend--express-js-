@@ -1,25 +1,54 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+  const navigate = useNavigate();
+  const [user,setuser] = useState("")
+  const [pass,setpass] = useState("")
+
+
+  function handleuser(evt)
+  {
+    setuser(evt.target.value)
+  }
+
+  function handlepass(evt){
+    setpass(evt.target.value)
+  }
+
+  function check() {
+    var logindetails = axios.post("http://localhost:5000/login",{"username":user,"password":pass});
+
+    logindetails.then(function(datat) {
+        if (datat.data === true) {
+           navigate('/success');
+        } else {
+            navigate('/fail');
+        }
+    });
+}
+
+    
+
+
+  
+
+return (
+  <div className="login-container">
+     <h2 style={{ color: "white", marginBottom: "20px" }}>Login</h2>
+
+      <div className="input-box">
+        <input type="text" onChange={handleuser} name="username" placeholder="Username" />
+      </div>
+      <div className="input-box">
+        <input type="password" onChange={handlepass} name="password" placeholder="Password" />
+      </div>
+      <button onClick={check} className="login-btn">Login</button>
     </div>
   );
-}
+};
 
 export default App;
