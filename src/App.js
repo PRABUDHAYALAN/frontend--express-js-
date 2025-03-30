@@ -20,7 +20,7 @@ function App() {
   }
 
   function check() {
-    var logindetails = axios.post("http://localhost:5000/login",{"username":user,"password":pass});
+    var logindetails = axios.post("https://back-end-1-wte0.onrender.com/login",{"username":user,"password":pass});
 
     logindetails.then(function(datat) {
         if (datat.data === true) {
